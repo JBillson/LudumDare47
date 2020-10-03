@@ -21,7 +21,8 @@ namespace FpsController
         {
             Forward,
             Left,
-            Right
+            Right,
+            Backwards
         }
 
         [FormerlySerializedAs("InAirSpeedModifier")] [SerializeField, Range(1, 2)]
@@ -60,6 +61,10 @@ namespace FpsController
             else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.D))
             {
                 StartCoroutine(Dash(DashDirection.Right));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.S))
+            {
+                StartCoroutine(Dash(DashDirection.Backwards));
             }
             else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0)
             {
@@ -126,6 +131,12 @@ namespace FpsController
                 {
                     var playerTransform = transform;
                     moveVector = playerTransform.right * 0 + playerTransform.right * dashSpeed;
+                }
+                
+                if (dashDirection == DashDirection.Backwards)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + -playerTransform.forward * dashSpeed;
                 }
 
                 MoveController(moveVector);
