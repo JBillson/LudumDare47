@@ -13,6 +13,9 @@ namespace FpsController
         [SerializeField] private float jumpHeight    = 3f;
         [SerializeField] private float dashSpeed     = 8f;
         [SerializeField] private float dashDuration  = 0.3f;
+        [SerializeField] private float dashCooldown  = 2f;
+
+        private float dashCountdown;
 
 
         [FormerlySerializedAs("InAirSpeedModifier")] [SerializeField, Range(1, 2)]
@@ -31,6 +34,7 @@ namespace FpsController
         private void Awake()
         {
             CharacterController = GetComponent<CharacterController>();
+            dashCountdown = dashCooldown;
         }
 
         private void Update()
@@ -43,7 +47,9 @@ namespace FpsController
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            dashCountdown -= Time.deltaTime;
+            
+            if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0)
             {
                 StartCoroutine(Dash());
             }
@@ -87,7 +93,7 @@ namespace FpsController
         public IEnumerator Dash()
         {
             _dashing = true;
-
+            dashCountdown = dashCooldown;
             while (_dashTimer <= dashDuration)
             {
                 var playerTransform = transform;
