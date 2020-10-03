@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dungeons;
+using Enemies.Scripts.Enemies.Base;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Enemies.Scripts.EnemySpawns
+namespace Enemies.Scripts.Enemies.Spawns
 {
     [RequireComponent(typeof(Dungeon))]
     public class EnemySpawner : SerializedMonoBehaviour
