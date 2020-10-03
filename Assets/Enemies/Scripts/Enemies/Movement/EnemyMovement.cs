@@ -57,8 +57,7 @@ namespace Enemies.Scripts.Enemies.Movement
 
             if (_isRepositioning) return;
 
-
-            if (_thisEnemy.GetCurrentHealth() < _thisEnemy.GetMaxHealth() * repositionHealthPercentage ||
+            if (_thisEnemy.EnemyLife().Life < _thisEnemy.EnemyLife().maxLife * repositionHealthPercentage ||
                 DistanceToPlayer() <= repositionMinDistToPlayer)
             {
                 Reposition();

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enemies.Scripts.Enemies.Base
 {
@@ -9,23 +8,17 @@ namespace Enemies.Scripts.Enemies.Base
         [Header("Enemy Settings")] public int attackSpeed = 1;
         public float attackRange = 2;
         public float moveSpeed = 3.5f;
-        [SerializeField] private float _maxHealth = 100f;
 
-        private float _health;
+        private EnemyLife _enemyLife;
 
         private void Awake()
         {
-            _health = _maxHealth;
+            _enemyLife = GetComponent<EnemyLife>();
         }
 
-        public float GetCurrentHealth()
+        public EnemyLife EnemyLife()
         {
-            return _health;
-        }
-
-        public float GetMaxHealth()
-        {
-            return _maxHealth;
+            return _enemyLife;
         }
     }
 }

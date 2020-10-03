@@ -46,7 +46,7 @@ namespace Enemies.Scripts.Enemies.Combat
         private void Shoot()
         {
             Debug.Log("Shooting");
-            Instantiate(bulletPrefab, firePoint.transform.position, Quaternion.identity);
+            Instantiate(bulletPrefab, firePoint.transform.position, firePoint.rotation);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dungeons;
+using Enemies.Scripts.Dungeons;
 using Enemies.Scripts.Enemies.Base;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -77,8 +77,6 @@ namespace Enemies.Scripts.Enemies.Spawns
             DoSpawn(enemiesToSpawn, spawnPoint);
 
             if (_enemyCollection.Count >= minPackSize || _enemyCollection.Count == 0) return;
-            Debug.Log($"{_enemyCollection.Count} enemies remaining");
-            Debug.Log("Enemies remaining < minPackSize.  Spawning remaining enemies");
             enemiesToSpawn.Clear();
             enemiesToSpawn.AddRange(_enemyCollection);
             DoSpawn(enemiesToSpawn, spawnPoint);
@@ -92,15 +90,21 @@ namespace Enemies.Scripts.Enemies.Spawns
                 _enemyCollection.Remove(enemy);
             }
 
-
             foreach (var enemy in enemiesToSpawn)
             {
                 var point = spawnPoint.transform.position + Random.insideUnitSphere * 2;
                 point = new Vector3(point.x, 0, point.z);
-                Instantiate(enemy, point, Quaternion.identity, enemyHolder.transform);
+                var instance = Instantiate(enemy, point, Quaternion.identity, enemyHolder.transform);
+                instance.EnemyLife().EnemyKilled += OnEnemyKilled;
             }
 
             Debug.Log($"{enemiesToSpawn.Count} enemies spawned");
+        }
+
+        private void OnEnemyKilled()
+        {
+            if (_enemyCollection.Count <= 0)
+                _dungeon.DungeonCompleted();
         }
     }
 }

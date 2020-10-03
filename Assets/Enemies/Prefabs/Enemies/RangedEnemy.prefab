@@ -229,6 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7100536563400206565}
   - component: {fileID: 7100536563400206566}
+  - component: {fileID: 7671239473820197798}
   - component: {fileID: 861038424618557879}
   - component: {fileID: 6473692606836016545}
   - component: {fileID: 1474917855}
@@ -270,7 +271,20 @@ MonoBehaviour:
   attackSpeed: 5
   attackRange: 10
   moveSpeed: 3.5
-  _maxHealth: 100
+--- !u!114 &7671239473820197798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100536563400206567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e080fe3ee3bbdaecbb98efb0f60464f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Life: 100
+  maxLife: 100
 --- !u!114 &861038424618557879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef73af058ede4af3b220b7aa1d889a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 341562848638967021, guid: 815116ad6edc6734890a8b053033119a,
+  bulletPrefab: {fileID: 6999409237805522660, guid: a6459af3e1bb25c91afea3fdeff33d31,
     type: 3}
   attackSpeedMultiplier: 1
   firePoint: {fileID: 837739627715362258}
@@ -347,10 +361,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8410103132312268868}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.7071072, z: -0, w: 0.70710635}
   m_LocalPosition: {x: 0.566, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1712032493379366891}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
