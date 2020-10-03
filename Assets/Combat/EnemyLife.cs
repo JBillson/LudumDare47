@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class EnemyLife : MonoBehaviour, IDamageable
 {
-    public float  Life;
+    [HideInInspector] public float Life;
+
+    public float  maxLife;
     public Action EnemyKilled;
+
+
+    private void Awake()
+    {
+        Life = maxLife;
+    }
 
     public void TakeDamage(float damage)
     {
