@@ -2,6 +2,6 @@ namespace Combat
 {
     public interface IDamageable
     {
-        void TakeDamage();
+        void TakeDamage(float damage);
     }
 }

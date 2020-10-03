@@ -38,6 +38,11 @@ namespace Combat
         private void HitObject(RaycastHit hit)
         {
             Debug.Log(hit.collider.name);
+            var damageable = hit.collider.GetComponent<IDamageable>();
+            
+            if (damageable != null)
+                damageable.TakeDamage(1);
+            
             Destroy(gameObject);
         }
     }
