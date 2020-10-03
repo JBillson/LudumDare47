@@ -17,6 +17,12 @@ namespace FpsController
 
         private float dashCountdown;
 
+        public enum DashDirection
+        {
+            Forward,
+            Left,
+            Right
+        }
 
         [FormerlySerializedAs("InAirSpeedModifier")] [SerializeField, Range(1, 2)]
         private float inAirSpeedModifier;
@@ -24,11 +30,9 @@ namespace FpsController
         private CharacterController CharacterController { get; set; }
         private Vector3             _velocity;
 
-        private int _jumpCount;
-        private int _maxJumpCount = 2;
-
-        private bool _dashing;
-
+        private int   _jumpCount;
+        private int   _maxJumpCount = 2;
+        private bool  _dashing;
         private float _dashTimer = 0;
 
         private void Awake()
@@ -48,10 +52,18 @@ namespace FpsController
             }
 
             dashCountdown -= Time.deltaTime;
-            
-            if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0)
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.A))
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(DashDirection.Left));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.D))
+            {
+                StartCoroutine(Dash(DashDirection.Right));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0)
+            {
+                StartCoroutine(Dash(DashDirection.Forward));
             }
 
             var x = Input.GetAxis("Horizontal");
@@ -90,15 +102,34 @@ namespace FpsController
             }
         }
 
-        public IEnumerator Dash()
+        public IEnumerator Dash(DashDirection dashDirection)
         {
             _dashing = true;
             dashCountdown = dashCooldown;
+            var moveVector = new Vector3();
+
             while (_dashTimer <= dashDuration)
             {
-                var playerTransform = transform;
-                var moveVector = playerTransform.right * 0 + playerTransform.forward * dashSpeed;
+                if (dashDirection == DashDirection.Forward)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + playerTransform.forward * dashSpeed;
+                }
+
+                if (dashDirection == DashDirection.Left)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + -playerTransform.right * dashSpeed;
+                }
+
+                if (dashDirection == DashDirection.Right)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + playerTransform.right * dashSpeed;
+                }
+
                 MoveController(moveVector);
+
                 yield return null;
             }
 
