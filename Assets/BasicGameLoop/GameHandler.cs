@@ -51,7 +51,6 @@ public class GameHandler : MonoBehaviour
     private void DungeonComplete()
     {
         WinCanvas.SetActive(true);
-        Debug.Log("Dungeon Complete");
     }
     
     private void GameOver()
