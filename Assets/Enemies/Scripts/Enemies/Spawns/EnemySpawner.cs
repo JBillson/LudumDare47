@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Enemies.Scripts.Dungeons;
@@ -74,17 +75,17 @@ namespace Enemies.Scripts.Enemies.Spawns
             }
 
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-            DoSpawn(enemiesToSpawn, spawnPoint);
+            StartCoroutine(DoSpawn(enemiesToSpawn, spawnPoint));
 
             if (_enemyCollection.Count >= minPackSize || _enemyCollection.Count == 0) return;
             enemiesToSpawn.Clear();
             enemiesToSpawn.AddRange(_enemyCollection);
-            DoSpawn(enemiesToSpawn, spawnPoint);
+            StartCoroutine(DoSpawn(enemiesToSpawn, spawnPoint));
         }
 
-        private void DoSpawn(List<Enemy> enemiesToSpawn, Transform spawnPoint)
+        private IEnumerator DoSpawn(List<Enemy> enemiesToSpawn, Transform spawnPoint)
         {
-            if (enemiesToSpawn == null) return;
+            if (enemiesToSpawn == null) yield break;
             foreach (var enemy in enemiesToSpawn)
             {
                 _enemyCollection.Remove(enemy);
@@ -96,6 +97,7 @@ namespace Enemies.Scripts.Enemies.Spawns
                 point = new Vector3(point.x, 0, point.z);
                 var instance = Instantiate(enemy, point, Quaternion.identity, enemyHolder.transform);
                 instance.EnemyLife().EnemyKilled += OnEnemyKilled;
+                yield return new WaitForSeconds(0.2f);
             }
 
             Debug.Log($"{enemiesToSpawn.Count} enemies spawned");
