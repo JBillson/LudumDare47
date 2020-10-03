@@ -13,7 +13,17 @@ namespace FpsController
         [SerializeField] private float jumpHeight    = 3f;
         [SerializeField] private float dashSpeed     = 8f;
         [SerializeField] private float dashDuration  = 0.3f;
+        [SerializeField] private float dashCooldown  = 2f;
 
+        private float dashCountdown;
+
+        public enum DashDirection
+        {
+            Forward,
+            Left,
+            Right,
+            Backwards
+        }
 
         [FormerlySerializedAs("InAirSpeedModifier")] [SerializeField, Range(1, 2)]
         private float inAirSpeedModifier;
@@ -21,16 +31,15 @@ namespace FpsController
         private CharacterController CharacterController { get; set; }
         private Vector3             _velocity;
 
-        private int _jumpCount;
-        private int _maxJumpCount = 2;
-
-        private bool _dashing;
-
+        private int   _jumpCount;
+        private int   _maxJumpCount = 2;
+        private bool  _dashing;
         private float _dashTimer = 0;
 
         private void Awake()
         {
             CharacterController = GetComponent<CharacterController>();
+            dashCountdown = dashCooldown;
         }
 
         private void Update()
@@ -43,9 +52,23 @@ namespace FpsController
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            dashCountdown -= Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.A))
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(DashDirection.Left));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.D))
+            {
+                StartCoroutine(Dash(DashDirection.Right));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.S))
+            {
+                StartCoroutine(Dash(DashDirection.Backwards));
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0)
+            {
+                StartCoroutine(Dash(DashDirection.Forward));
             }
 
             var x = Input.GetAxis("Horizontal");
@@ -84,15 +107,40 @@ namespace FpsController
             }
         }
 
-        public IEnumerator Dash()
+        public IEnumerator Dash(DashDirection dashDirection)
         {
             _dashing = true;
+            dashCountdown = dashCooldown;
+            var moveVector = new Vector3();
 
             while (_dashTimer <= dashDuration)
             {
-                var playerTransform = transform;
-                var moveVector = playerTransform.right * 0 + playerTransform.forward * dashSpeed;
+                if (dashDirection == DashDirection.Forward)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + playerTransform.forward * dashSpeed;
+                }
+
+                if (dashDirection == DashDirection.Left)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + -playerTransform.right * dashSpeed;
+                }
+
+                if (dashDirection == DashDirection.Right)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + playerTransform.right * dashSpeed;
+                }
+                
+                if (dashDirection == DashDirection.Backwards)
+                {
+                    var playerTransform = transform;
+                    moveVector = playerTransform.right * 0 + -playerTransform.forward * dashSpeed;
+                }
+
                 MoveController(moveVector);
+
                 yield return null;
             }
 
