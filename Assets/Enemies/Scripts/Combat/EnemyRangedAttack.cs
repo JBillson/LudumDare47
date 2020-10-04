@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Enemies.Scripts.Combat
 {
     [RequireComponent(typeof(EnemyMovement))]
-    public class EnemyRangedAttack : MonoBehaviour
+    public class EnemyRangedAttack : MonoBehaviour, IEnemyAttack
     {
         [Header("Prefabs")] public GameObject bulletPrefab;
         [Header("Ranged Attack Settings")] public float attackSpeedMultiplier = 1;
@@ -15,6 +15,7 @@ namespace Enemies.Scripts.Combat
         private EnemyMovement _enemyMovement;
         private Enemy _thisEnemy;
         private Coroutine _attackCoroutine;
+        private bool _isAttacking;
 
 
         private void Awake()
@@ -28,23 +29,31 @@ namespace Enemies.Scripts.Combat
             _enemyMovement.onReadyToAttack += Attack;
         }
 
-        private void Attack()
+        public void Attack()
         {
             if (_attackCoroutine != null) return;
             _attackCoroutine = StartCoroutine(DoAttack());
         }
 
+        public bool IsAttacking()
+        {
+            return _isAttacking;
+        }
+
         private IEnumerator DoAttack()
         {
-            Shoot();
+            StartCoroutine(Shoot());
             var seconds = 2 / (attackSpeedMultiplier * _thisEnemy.attackSpeed);
             yield return new WaitForSeconds(seconds);
             _attackCoroutine = null;
         }
 
-        private void Shoot()
+        private IEnumerator Shoot()
         {
+            _isAttacking = true;
             Instantiate(bulletPrefab, firePoint.transform.position, firePoint.rotation);
+            // wait for 0.2 seconds - gonna be a dotween animation here
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Enemies.Scripts.Base;
+using Enemies.Scripts.Combat;
 using FpsController;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -22,6 +22,7 @@ namespace Enemies.Scripts.Movement
         private bool _isMoving;
         private bool _isRepositioning;
         private Transform _target;
+        private IEnemyAttack _enemyAttack;
 
         public Action onReadyToAttack;
 
@@ -35,6 +36,7 @@ namespace Enemies.Scripts.Movement
             _agent = GetComponent<NavMeshAgent>();
             _thisEnemy = GetComponent<Enemy>();
             _playerController = FindObjectOfType<PlayerController>();
+            _enemyAttack = GetComponent<IEnemyAttack>();
         }
 
         private void Start()
@@ -52,6 +54,9 @@ namespace Enemies.Scripts.Movement
         private void Update()
         {
             _isMoving = !(_agent.remainingDistance <= _agent.stoppingDistance);
+            // Can't move when attacking
+            if (_enemyAttack.IsAttacking()) return;
+
             _agent.destination = _target.position;
             transform.LookAt(_playerController.transform);
 
@@ -79,7 +84,6 @@ namespace Enemies.Scripts.Movement
             _target = target;
         }
 
-        [Button]
         private void Reposition()
         {
             StartCoroutine(DoReposition());
