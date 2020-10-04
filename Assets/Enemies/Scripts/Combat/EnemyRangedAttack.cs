@@ -54,6 +54,7 @@ namespace Enemies.Scripts.Combat
             Instantiate(bulletPrefab, firePoint.transform.position, firePoint.rotation);
             // wait for 0.2 seconds - gonna be a dotween animation here
             yield return new WaitForSeconds(0.2f);
+            _isAttacking = false;
         }
     }
 }

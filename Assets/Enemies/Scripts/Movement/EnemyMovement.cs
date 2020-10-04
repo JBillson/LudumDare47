@@ -16,6 +16,8 @@ namespace Enemies.Scripts.Movement
         [Header("Reposition Settings")] public float repositionRadius = 5;
         [Range(0, 1)] public float repositionHealthPercentage = 0.2f;
         public float repositionMinDistToPlayer = 2;
+
+        [Header("References")] public Transform enemyModel;
         private NavMeshAgent _agent;
         private PlayerController _playerController;
         private Enemy _thisEnemy;
@@ -58,7 +60,10 @@ namespace Enemies.Scripts.Movement
             if (_enemyAttack.IsAttacking()) return;
 
             _agent.destination = _target.position;
-            transform.LookAt(_playerController.transform);
+
+            // enemy model to look at player while moving
+            var position = _playerController.transform.position;
+            enemyModel.transform.LookAt(new Vector3(position.x, 0, position.z));
 
             if (_isRepositioning) return;
 

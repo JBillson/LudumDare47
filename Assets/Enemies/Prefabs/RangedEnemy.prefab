@@ -270,9 +270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c474c62bd2b941428e78c8977ca28bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repositionRadius: 5
+  repositionRadius: 8
   repositionHealthPercentage: 0.2
   repositionMinDistToPlayer: 3
+  enemyModel: {fileID: 2402040933596988603}
 --- !u!114 &6473692606836016545
 MonoBehaviour:
   m_ObjectHideFlags: 0

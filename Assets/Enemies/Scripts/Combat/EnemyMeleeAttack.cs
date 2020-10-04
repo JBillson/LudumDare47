@@ -52,7 +52,7 @@ namespace Enemies.Scripts.Combat
         {
             _isAttacking = true;
             debugAttackMaterial.color = Color.red;
-            transform.DOLocalMoveZ(1, .1f);
+            // transform.DOLocalMoveZ(1, .1f);
             yield return new WaitForSeconds(0.2f);
             debugAttackMaterial.color = Color.white;
             _isAttacking = false;
