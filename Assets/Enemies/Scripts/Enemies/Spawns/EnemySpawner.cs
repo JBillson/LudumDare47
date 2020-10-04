@@ -26,6 +26,7 @@ namespace Enemies.Scripts.Enemies.Spawns
         private List<Enemy> _enemyCollection = new List<Enemy>();
         private int _numberOfEnemiesAliveWhenSpawningNextWave;
         private bool _spawnsStarted;
+        private Coroutine _enemySpawnCoroutine;
 
         private void Awake()
         {
@@ -59,10 +60,10 @@ namespace Enemies.Scripts.Enemies.Spawns
             _enemyCollection = _enemyCollection.OrderBy(a => Guid.NewGuid()).ToList();
             _numberOfEnemiesAliveWhenSpawningNextWave = (int) (percentageToSpawnNextEnemies * _enemyCollection.Count);
             _spawnsStarted = true;
-            SpawnNextPack();
+            StartCoroutine(SpawnNextPack());
         }
 
-        private void SpawnNextPack()
+        private IEnumerator SpawnNextPack()
         {
             var packSize = Random.Range(minPackSize, maxPackSize);
             if (packSize > _enemyCollection.Count)
@@ -75,9 +76,15 @@ namespace Enemies.Scripts.Enemies.Spawns
             }
 
             var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-            StartCoroutine(DoSpawn(enemiesToSpawn, spawnPoint));
+            _enemySpawnCoroutine = StartCoroutine(DoSpawn(enemiesToSpawn, spawnPoint));
 
-            if (_enemyCollection.Count >= minPackSize || _enemyCollection.Count == 0) return;
+            if (_enemyCollection.Count >= minPackSize || _enemyCollection.Count == 0) yield break;
+
+            while (_enemySpawnCoroutine != null)
+            {
+                yield return null;
+            }
+
             enemiesToSpawn.Clear();
             enemiesToSpawn.AddRange(_enemyCollection);
             StartCoroutine(DoSpawn(enemiesToSpawn, spawnPoint));
@@ -85,7 +92,6 @@ namespace Enemies.Scripts.Enemies.Spawns
 
         private IEnumerator DoSpawn(List<Enemy> enemiesToSpawn, Transform spawnPoint)
         {
-            if (enemiesToSpawn == null) yield break;
             foreach (var enemy in enemiesToSpawn)
             {
                 _enemyCollection.Remove(enemy);
