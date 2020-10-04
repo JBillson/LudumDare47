@@ -11,7 +11,7 @@ namespace Enemies.Scripts.Combat
     {
         [Header("Melee Attack Settings")] public float attackSpeedMultiplier = 1;
 
-        [Header("Debug Settings")] public Material debugAttackMaterial;
+        [Header("Debug Settings")] public GameObject modelToColourChange;
 
         private EnemyMovement _enemyMovement;
         private Enemy _thisEnemy;
@@ -51,10 +51,10 @@ namespace Enemies.Scripts.Combat
         private IEnumerator SlashAttack()
         {
             _isAttacking = true;
-            debugAttackMaterial.color = Color.red;
+            modelToColourChange.GetComponent<MeshRenderer>().material.color = Color.red;
             // transform.DOLocalMoveZ(1, .1f);
             yield return new WaitForSeconds(0.2f);
-            debugAttackMaterial.color = Color.white;
+            modelToColourChange.GetComponent<MeshRenderer>().material.color = Color.white;
             _isAttacking = false;
         }
     }

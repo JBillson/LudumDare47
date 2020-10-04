@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeedMultiplier: 1
-  debugAttackMaterial: {fileID: 2100000, guid: b9a4ec5755635284f80000b22814fe06, type: 2}
+  modelToColourChange: {fileID: 7100536563077494012}
 --- !u!195 &1841597370
 NavMeshAgent:
   m_ObjectHideFlags: 0
