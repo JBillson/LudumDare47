@@ -65,7 +65,6 @@ namespace Enemies.Scripts.Enemies.Movement
 
             if (!_isMoving && DistanceToPlayer() < _thisEnemy.attackRange)
             {
-                Debug.Log("Is Ready To Attack");
                 onReadyToAttack?.Invoke();
             }
         }

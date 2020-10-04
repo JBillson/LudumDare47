@@ -30,7 +30,6 @@ namespace Enemies.Scripts.Enemies.Combat
 
         private void Attack()
         {
-            Debug.Log("ATTACK");
             if (_attackCoroutine != null) return;
             _attackCoroutine = StartCoroutine(DoAttack());
         }
@@ -45,7 +44,6 @@ namespace Enemies.Scripts.Enemies.Combat
 
         private void Shoot()
         {
-            Debug.Log("Shooting");
             Instantiate(bulletPrefab, firePoint.transform.position, firePoint.rotation);
         }
     }

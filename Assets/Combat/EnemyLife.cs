@@ -6,7 +6,7 @@ public class EnemyLife : MonoBehaviour, IDamageable
 {
     [HideInInspector] public float Life;
 
-    public float  maxLife;
+    public float maxLife;
     public Action EnemyKilled;
 
 
@@ -21,8 +21,8 @@ public class EnemyLife : MonoBehaviour, IDamageable
 
         if (Life <= 0)
         {
-            EnemyKilled?.Invoke();
             Destroy(gameObject);
+            EnemyKilled?.Invoke();
         }
     }
 }

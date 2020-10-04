@@ -27,6 +27,7 @@ namespace Enemies.Scripts.Enemies.Spawns
         private int _numberOfEnemiesAliveWhenSpawningNextWave;
         private bool _spawnsStarted;
         private Coroutine _enemySpawnCoroutine;
+        [HideInInspector] public Action onFinalEnemyKilled;
 
         private void Awake()
         {
@@ -36,13 +37,6 @@ namespace Enemies.Scripts.Enemies.Spawns
         public void Start()
         {
             _dungeon.onDungeonEntered += StartSpawns;
-        }
-
-        private void Update()
-        {
-            if (!_spawnsStarted || _enemyCollection.Count <= 0) return;
-            if (enemyHolder.childCount > _numberOfEnemiesAliveWhenSpawningNextWave) return;
-            SpawnNextPack();
         }
 
         private void StartSpawns()
@@ -59,12 +53,15 @@ namespace Enemies.Scripts.Enemies.Spawns
             // Shuffle enemy collection to get variation in packs
             _enemyCollection = _enemyCollection.OrderBy(a => Guid.NewGuid()).ToList();
             _numberOfEnemiesAliveWhenSpawningNextWave = (int) (percentageToSpawnNextEnemies * _enemyCollection.Count);
+            if (_numberOfEnemiesAliveWhenSpawningNextWave < 1)
+                _numberOfEnemiesAliveWhenSpawningNextWave = 1;
             _spawnsStarted = true;
             StartCoroutine(SpawnNextPack());
         }
 
         private IEnumerator SpawnNextPack()
         {
+            Debug.Log("Spawn Next Pack");
             var packSize = Random.Range(minPackSize, maxPackSize);
             if (packSize > _enemyCollection.Count)
                 packSize = _enemyCollection.Count;
@@ -103,16 +100,27 @@ namespace Enemies.Scripts.Enemies.Spawns
                 point = new Vector3(point.x, 0, point.z);
                 var instance = Instantiate(enemy, point, Quaternion.identity, enemyHolder.transform);
                 instance.EnemyLife().EnemyKilled += OnEnemyKilled;
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.5f);
             }
-
-            Debug.Log($"{enemiesToSpawn.Count} enemies spawned");
         }
 
         private void OnEnemyKilled()
         {
-            if (_enemyCollection.Count <= 0)
-                _dungeon.DungeonCompleted();
+            StartCoroutine(EnemyKilled());
+        }
+
+        private IEnumerator EnemyKilled()
+        {
+            yield return new WaitForEndOfFrame();
+            if (enemyHolder.childCount <= _numberOfEnemiesAliveWhenSpawningNextWave)
+            {
+                StartCoroutine(SpawnNextPack());
+            }
+
+            if (enemyHolder.childCount <= 0)
+            {
+                onFinalEnemyKilled?.Invoke();
+            }
         }
     }
 }
