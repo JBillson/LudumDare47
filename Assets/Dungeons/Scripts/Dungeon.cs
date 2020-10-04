@@ -1,8 +1,8 @@
 ﻿using System;
-using Enemies.Scripts.Enemies.Spawns;
+using Enemies.Scripts.Spawns;
 using UnityEngine;
 
-namespace Enemies.Scripts.Dungeons
+namespace Dungeons.Scripts
 {
     public class Dungeon : MonoBehaviour
     {

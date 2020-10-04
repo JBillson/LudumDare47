@@ -243,7 +243,7 @@ MonoBehaviour:
   enemyType: 0
   attackSpeed: 1
   attackRange: 10
-  moveSpeed: 3.5
+  moveSpeed: 4
 --- !u!114 &7671239473820197798
 MonoBehaviour:
   m_ObjectHideFlags: 0

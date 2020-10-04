@@ -168,8 +168,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 7100536563400206566, guid: 4ff711e39ed4f5946a2e046908a52325, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -177,30 +176,18 @@ MonoBehaviour:
     SerializationNodes:
     - Name: enemies
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Enemies.Scripts.Enemies.Base.Enemy,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Enemies.Scripts.Base.Enemy,
         Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Enemies.Scripts.Enemies.Base.Enemy,
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[Enemies.Scripts.Base.Enemy,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
       Data: 0
-    - Name: $v
-      Entry: 3
-      Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -213,7 +200,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 363967194}
   minPackSize: 3
-  maxPackSize: 4
+  maxPackSize: 6
   percentageToSpawnNextEnemies: 0.2
   enemyHolder: {fileID: 1999781213}
 --- !u!114 &130002387
@@ -260,6 +247,75 @@ Transform:
   m_Father: {fileID: 2127010890}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &363919908
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206565, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100536563400206567, guid: 8e2a454a649b4d04083b35b73928a322,
+        type: 3}
+      propertyPath: m_Name
+      value: MeleeEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e2a454a649b4d04083b35b73928a322, type: 3}
 --- !u!1 &363967193
 GameObject:
   m_ObjectHideFlags: 0

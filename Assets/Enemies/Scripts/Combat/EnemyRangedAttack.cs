@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using Enemies.Scripts.Enemies.Base;
-using Enemies.Scripts.Enemies.Movement;
+using Enemies.Scripts.Base;
+using Enemies.Scripts.Movement;
 using UnityEngine;
 
-namespace Enemies.Scripts.Enemies.Combat
+namespace Enemies.Scripts.Combat
 {
     [RequireComponent(typeof(EnemyMovement))]
-    public class RangedAttack : MonoBehaviour
+    public class EnemyRangedAttack : MonoBehaviour
     {
         [Header("Prefabs")] public GameObject bulletPrefab;
         [Header("Ranged Attack Settings")] public float attackSpeedMultiplier = 1;

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
-using Enemies.Scripts.Enemies.Base;
+using Enemies.Scripts.Base;
 using FpsController;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace Enemies.Scripts.Enemies.Movement
+namespace Enemies.Scripts.Movement
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Enemy))]

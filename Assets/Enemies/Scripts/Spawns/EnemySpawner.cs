@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Enemies.Scripts.Dungeons;
-using Enemies.Scripts.Enemies.Base;
+using Dungeons.Scripts;
+using Enemies.Scripts.Base;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Enemies.Scripts.Enemies.Spawns
+namespace Enemies.Scripts.Spawns
 {
     [RequireComponent(typeof(Dungeon))]
     public class EnemySpawner : SerializedMonoBehaviour
@@ -25,7 +25,6 @@ namespace Enemies.Scripts.Enemies.Spawns
         private Dungeon _dungeon;
         private List<Enemy> _enemyCollection = new List<Enemy>();
         private int _numberOfEnemiesAliveWhenSpawningNextWave;
-        private bool _spawnsStarted;
         private Coroutine _enemySpawnCoroutine;
         [HideInInspector] public Action onFinalEnemyKilled;
 
@@ -55,7 +54,6 @@ namespace Enemies.Scripts.Enemies.Spawns
             _numberOfEnemiesAliveWhenSpawningNextWave = (int) (percentageToSpawnNextEnemies * _enemyCollection.Count);
             if (_numberOfEnemiesAliveWhenSpawningNextWave < 1)
                 _numberOfEnemiesAliveWhenSpawningNextWave = 1;
-            _spawnsStarted = true;
             StartCoroutine(SpawnNextPack());
         }
 
