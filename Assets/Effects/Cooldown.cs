@@ -8,15 +8,16 @@ public class Cooldown : MonoBehaviour
     public Image       image;
     public TMP_Text TextMeshPro;
     
-    public void CooldownCountdown(float timer, float maxTimer, float currentValue)
+    public void CooldownCountdown(float timer, float maxTimer)
     {
         timer -= Time.deltaTime;
 
         var precentage = timer / maxTimer;
         image.fillAmount = precentage;
+        var tmpVal = timer;
+        if (tmpVal <= 0)
+            tmpVal = 0;
         
-        if(currentValue <= 0 ) return;
-        
-        TextMeshPro.text = currentValue.ToString("0.0");
+        TextMeshPro.text = tmpVal.ToString("0.0");
     }
 }
