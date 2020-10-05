@@ -1,4 +1,5 @@
 using System;
+using PulledTogether;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,11 +9,16 @@ namespace Combat
     {
         [SerializeField] private Transform  firePoint;
         [SerializeField] private Projectile projectile;
+        [SerializeField] private HitMarker  _hitMarker;
+
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
-                Instantiate(projectile, firePoint.position, firePoint.rotation);
+            {
+                var proj = Instantiate(projectile, firePoint.position, firePoint.rotation);
+                proj.Init(_hitMarker);
+            }
         }
     }
 }
