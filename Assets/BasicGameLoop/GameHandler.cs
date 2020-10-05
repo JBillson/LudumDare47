@@ -45,6 +45,8 @@ public class GameHandler : MonoBehaviour
     private bool CheckDistToPlayer()
     {
         var dist = Vector3.Distance(winPoint.position, playerPos.position);
+        Debug.Log(dist);
+        Debug.Log(winPoint.gameObject.name);
         return dist <= 3;
     }
 

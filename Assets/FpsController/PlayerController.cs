@@ -15,7 +15,8 @@ namespace FpsController
         [SerializeField] private float dashDuration  = 0.3f;
         [SerializeField] private float dashCooldown  = 2f;
 
-        private float dashCountdown;
+        private float    dashCountdown;
+        private Cooldown Dashcooldown;
 
         public enum DashDirection
         {
@@ -40,6 +41,7 @@ namespace FpsController
         {
             CharacterController = GetComponent<CharacterController>();
             dashCountdown = dashCooldown;
+            Dashcooldown = FindObjectOfType<Cooldown>();
         }
 
         private void Update()
@@ -53,6 +55,7 @@ namespace FpsController
             }
 
             dashCountdown -= Time.deltaTime;
+
 
             if (Input.GetKeyDown(KeyCode.LeftShift) && dashCountdown <= 0 && Input.GetKey(KeyCode.A))
             {
@@ -85,6 +88,7 @@ namespace FpsController
             var playerTransform = transform;
             var moveVector = playerTransform.right * x + playerTransform.forward * z;
 
+            Dashcooldown.CooldownCountdown(dashCountdown, dashCooldown);
             MoveController(moveVector);
         }
 
@@ -132,7 +136,7 @@ namespace FpsController
                     var playerTransform = transform;
                     moveVector = playerTransform.right * 0 + playerTransform.right * dashSpeed;
                 }
-                
+
                 if (dashDirection == DashDirection.Backwards)
                 {
                     var playerTransform = transform;
