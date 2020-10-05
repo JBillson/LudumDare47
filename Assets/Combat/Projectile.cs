@@ -1,6 +1,5 @@
-using System;
+using PulledTogether;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat
 {
@@ -10,6 +9,12 @@ namespace Combat
         [SerializeField] private float     speed;
         [SerializeField] private float     lifeSpan;
 
+        private HitMarker _hitMarker;
+        public void Init(HitMarker hitMarker)
+        {
+            _hitMarker = hitMarker;
+        }
+        
         private void Update()
         {
             lifeSpan -= Time.deltaTime;
@@ -25,9 +30,8 @@ namespace Combat
         private void CheckCollisions(float movDistance)
         {
             var ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
 
-            var hasHit = Physics.Raycast(ray, out hit, movDistance, layerMask, QueryTriggerInteraction.Collide);
+            var hasHit = Physics.Raycast(ray, out var hit, movDistance, layerMask, QueryTriggerInteraction.Collide);
 
             if (hasHit)
             {
@@ -37,12 +41,14 @@ namespace Combat
 
         private void HitObject(RaycastHit hit)
         {
-            Debug.Log(hit.collider.name);
             var damageable = hit.collider.GetComponent<IDamageable>();
-            
+        
             if (damageable != null)
+            {
+               _hitMarker.Trigger(); 
                 damageable.TakeDamage(1);
-            
+            }
+
             Destroy(gameObject);
         }
     }
